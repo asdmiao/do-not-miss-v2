@@ -1,0 +1,3 @@
+package com.donotmiss.backend.aiapplication.career.recommendation;
+import com.donotmiss.backend.aiapplication.career.recommendation.evaluation.RecommendationEvaluation; import org.junit.jupiter.api.Test; import java.util.*; import static org.assertj.core.api.Assertions.assertThat;
+class RecommendationEvaluationTest {@Test void calculatesRankingMetrics(){var metrics=RecommendationEvaluation.evaluate(List.of(new RecommendationEvaluation.Case("candidate",List.of("a","b"))),Map.of("candidate",List.of("a","c","b")),3);assertThat(metrics.topKHitRate()).isEqualTo(1);assertThat(metrics.precisionAtK()).isEqualTo(0.667);assertThat(metrics.recallAtK()).isEqualTo(1);assertThat(metrics.mrr()).isEqualTo(1);}}

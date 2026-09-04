@@ -1,6 +1,7 @@
 import {
   Award,
   CalendarDays,
+  FileText,
   Compass,
   Flag,
   Heart,
@@ -41,7 +42,9 @@ export const studentNavigationGroups: StudentNavigationGroup[] = [
     label: "成长",
     items: [
       { to: "/student/coach", label: "教练", icon: MessagesSquare },
-      { to: "/student/achievements", label: "个人成就", shortLabel: "成就", icon: Award }
+      { to: "/student/achievements", label: "个人成就", shortLabel: "成就", icon: Award },
+      { to: "/student/career", label: "候选人档案", shortLabel: "档案", icon: FileText },
+      { to: "/student/jobs", label: "职位要求", shortLabel: "JD", icon: FileText }
     ]
   }
 ];

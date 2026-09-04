@@ -4,7 +4,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const title = computed(() => route.meta.title ?? "Do Not Miss");
+const title = computed(() => route.meta.title ?? "DO NOT MISS V2");
 const description = computed(() => route.meta.description ?? "这个模块正在迁移到新的 Vue 客户端。");
 </script>
 

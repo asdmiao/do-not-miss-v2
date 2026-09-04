@@ -69,7 +69,7 @@ async function submit() {
       <RouterLink class="brand auth-brand" to="/">
         <span class="brand-mark">DNM</span>
         <span>
-          <strong>do not miss</strong>
+          <strong>DO NOT MISS V2</strong>
           <small>student growth platform</small>
         </span>
       </RouterLink>

@@ -1,161 +1,231 @@
-# Do Not Miss
+# DO NOT MISS V2 — Interest-Driven Growth & Career Matching
 
-Do Not Miss 是一个面向大学生成长与社会实践机会发现的平台。项目围绕“活动发现 -> AI 推荐 / 规划 -> 预约与日程 -> 完成记录 -> 能力评分 -> 个人成长画像”构建闭环，尝试把 RAG、Agent、多轮记忆、异步消息和能力评估系统落到一个真实业务场景里。
+**An AI Agent system that connects personal interests, personal growth, abilities, and career opportunities.**
 
-## 核心功能
-
-- 学生端活动检索、预约、关注组织、挑战管理、日程管理。
-- 社会端活动发布，活动进入审核与质量预处理流程。
-- AI 推荐：Query Rewrite + OpenSearch BM25 / Embedding 混合召回 + LLM 推荐解释。
-- AI 规划：多 Agent 计划生成，包含 Planner、Schedule Checker、Critic。
-- Agent Trace：记录每次 AI 调用的 Run / Step / Artifact，便于定位 Bad Case。
-- Bad Case Intake Agent：接收用户反馈，结合 Trace 自动归因。
-- Coach：学习日志与长期记忆复习。
-- 用户画像：完成记录、挑战、教练日志触发异步画像刷新。
-- 能力评分：LLM 证据抽取 + Java 固定评分引擎 + Judge 验证。
-- 能力地图：HAC 层次聚类与动态 Anchor，将相近能力标签归并展示。
-- 异步工程：RabbitMQ、Outbox Pattern、失败重试表，保证索引、画像、成长标签等派生数据最终一致。
-
-## 技术栈
-
-- 后端：Java 21、Spring Boot、Spring Data JPA、Flyway、Maven
-- 数据库：MySQL
-- 缓存：Redis
-- 消息队列：RabbitMQ
-- 检索：OpenSearch、BM25、Embedding 向量召回、混合召回评测
-- AI：Qwen / OpenAI-compatible API、Embedding API、Agent Workflow、RAG
-- 前端：Vue 3、Vite、TypeScript
-- 部署：开发环境可用 Docker Compose 启动中间件；生产/演示环境支持 Docker Compose 构建前端、后端和中间件
-
-## 项目结构
+**DO NOT MISS V2 —— 兴趣导向的个人成长与职业匹配 Agent 系统**，从兴趣和个人成长出发，沉淀个人能力画像，并结合 Resume、JD、Evidence、Retrieval、Gap Analysis 和 Recommendation，形成从个人成长到职业匹配的 Agent 闭环。
 
 ```text
-do-not-miss
-├── backend/   Spring Boot 后端、数据库迁移、AI/RAG/Agent/评分逻辑
-├── frontend/  Vue 3 + Vite 前端
-└── docs/      待处理问题、面试问题、项目文档
+Interest → Growth → Ability → Career → Job Matching
 ```
 
-## 快速启动
+## 核心闭环
 
-### 方式 A：容器化启动前后端和中间件
+### ① 我对什么感兴趣？我成长成了什么样？
 
-根目录的 `docker-compose.yml` 会构建后端 Spring Boot 镜像、前端 Nginx 镜像，并启动 MySQL、Redis、RabbitMQ、OpenSearch。
+```text
+Interest
+   ↓
+Activities / Projects / Courses / Research / Skills
+   ↓
+Growth Agent
+   ↓
+Personal Growth Information
+   ↓
+Ability & Growth Profile
+```
 
-```bash
+系统从用户的兴趣和长期成长经历出发，沉淀个人成长信息与能力画像。
+
+### ② 我有什么能力？
+
+```text
+Resume → Resume Agent → Candidate Profile → Candidate Evidence
+```
+
+将简历转换为结构化候选人画像和可追溯的 Candidate Evidence。
+
+### ③ 什么岗位适合我？
+
+```text
+JD → Structured Requirements → Job Evidence / OpenSearch Retrieval
+                              ↓
+Candidate Evidence ↔ Job Requirements
+                              ↓
+                    MATCH / GAP / UNKNOWN
+                              ↓
+                       Recommendation
+                              ↓
+                         Top-K Jobs
+```
+
+最终将个人成长与岗位需求连接起来，回答：
+
+> **我对什么感兴趣 → 我具备什么能力 → 我适合什么职业 → 哪些岗位更适合我。**
+
+## 整体架构
+
+```mermaid
+flowchart TD
+  R[Resume] --> RA[Resume Agent] --> CP[Candidate Profile] --> CE[Candidate Evidence]
+  JD[Job Description] --> JP[JD Parsing] --> JR[Structured Job Requirements]
+  JP --> CH[Section-aware Chunks] --> OS[OpenSearch] --> JE[Top-K Evidence]
+  CE <--> JR
+  CE --> GA[Gap Analysis]
+  JR --> GA
+  GA --> S[MATCH / GAP / UNKNOWN] --> RP[Recommendation] --> TOP[Top-K Jobs]
+  subgraph Runtime[Agent Runtime]
+    AR[AgentRuntime] --> TR[ToolRegistry]
+    AR --> LG[LlmGateway]
+    AR --> T[Trace]
+  end
+  RA -.-> Runtime
+  JP -.-> Runtime
+  subgraph Infrastructure
+    DB[MySQL]
+    C[Redis]
+    MQ[RabbitMQ]
+    SEARCH[OpenSearch]
+    UI[Vue Frontend]
+  end
+  CP --> DB
+  JR --> DB
+  GA --> DB
+  OS --> SEARCH
+  UI --> RA
+  UI --> JP
+```
+
+## Growth Stage
+
+Activity、Project、Course、Research 和 Skills 经由 Growth Agent 沉淀为 Personal Growth Information，是 Career Intelligence 的上游个人成长基础。
+
+```text
+Activities / Projects / Courses / Research / Skills → Growth Agent → Personal Growth Information
+```
+
+## Agent Runtime
+
+- **AgentRuntime**：统一驱动 Agent Run、Step、Action、Tool Invocation 和状态转移。
+- **ToolRegistry**：注册并调用 Agent tools。
+- **LlmGateway**：隔离具体模型 Provider，提供统一 LLM 调用入口。
+- **Trace**：记录运行状态、耗时和 token usage，并保护原始 Prompt、Response、Resume 与 JD 内容。
+
+## Resume Intelligence
+
+```text
+Resume → Immutable Resume Version → Resume Agent → Structured Resume → Candidate Profile Snapshot → Candidate Evidence
+```
+
+Resume 版本和 content hash 保证历史输入可追溯；Candidate Evidence 保存 claim、skill code、confidence 及来源引用。
+
+## Job Description Intelligence
+
+```text
+JD → Immutable Job Requirement Version → Section-aware Chunks + Structured Requirements → OpenSearch Index
+```
+
+JD 同时产出结构化岗位要求和可检索 chunks，便于后续证据检索与匹配。
+
+## OpenSearch Retrieval
+
+Job evidence 使用独立索引 `do_not_miss_job_requirements`。当前生产演示以 BM25 为主，同时预留可选 Vector Retrieval + RRF 扩展。
+
+```text
+JD → OpenSearch Index → BM25 Retrieval → Top-K Evidence
+```
+
+已完成一次真实 BM25 E2E 验证：JD version 8 成功建立索引，查询返回 Top-K 结果（REQUIREMENTS、GENERAL、RESPONSIBILITIES）。
+
+## Gap Analysis
+
+Gap Analysis 将 Candidate Evidence 与 Structured Requirements 进行 evidence-grounded matching，并保留证据不足时的 UNKNOWN：
+
+- **MATCH**：已有证据充分支持岗位要求。
+- **GAP**：要求与候选人能力之间存在明显缺口。
+- **UNKNOWN**：证据不足，无法可靠判断。
+
+每条结果都保留 evidence 与 source reference，便于解释和追溯。
+
+## Recommendation
+
+Recommendation 复用 Gap Analysis 结果进行 deterministic ranking，输出 Top-K 岗位及可解释结果。排序综合 weighted match、critical gaps 和 unknowns，用户可以看到推荐理由、主要优势和主要缺口。
+
+## Demo Walkthrough
+
+1. 创建 Resume。
+2. 执行 Resume Parse，查看 Candidate Profile 与 Candidate Evidence。
+3. 创建 JD。
+4. 执行 JD Parse，生成 Structured Requirements 与 chunks。
+5. 在 Retrieval Test 中检索岗位证据。
+6. 运行 Gap Analysis，查看 MATCH、GAP、UNKNOWN 及证据追溯。
+7. 选择多个已解析 JD，查看 Top-K Recommendation。
+
+## Technology Stack
+
+- Java 21 / Spring Boot
+- Vue 3 / TypeScript
+- MySQL / Redis / RabbitMQ
+- OpenSearch / BM25
+- Qwen / OpenAI-compatible LLM
+- AgentRuntime / ToolRegistry / LlmGateway
+- Docker Compose
+
+## Evaluation
+
+- **Gap Analysis**：12-case fixture 与 policy evaluation。
+- **Job Retrieval**：20-case evaluation fixture，支持 Recall@K、MRR、nDCG 计算。
+- **Recommendation**：evaluation fixture 与 Hit Rate@K、Precision@K、Recall@K、MRR evaluator。
+- **BM25 Retrieval**：已完成真实 E2E 验证。
+
+README 不虚构 Recall、MRR、nDCG 或 Hit Rate 数字；上述指标在独立 fixture/evaluator 中计算。
+
+## Current Limitations
+
+1. Candidate Evidence extraction 仍较粗，可能产生重复或过宽证据。
+2. 当前 Retrieval Demo 以 BM25 为主，Vector/RRF 为可选扩展。
+3. Recommendation 当前采用 deterministic policy，尚未引入 learned ranking。
+
+## Future Extensions
+
+- 更细粒度的 Candidate Evidence extraction。
+- Vector Retrieval + RRF / learned reranking。
+- Growth Profile 与 Career Profile 的统一语义层。
+
+## Local Development
+
+### Docker Compose
+
+```powershell
 docker compose up -d --build
 ```
 
-默认地址：
+默认地址：Frontend `http://localhost`、Backend `http://localhost:8080`，以及 Compose 中配置的 MySQL、Redis、RabbitMQ、OpenSearch 服务。
 
-- 前端：`http://localhost`
-- 后端：`http://localhost:8080`
-- RabbitMQ 管理页：`http://localhost:15672`
-- OpenSearch：`http://localhost:9200`
-
-默认使用 mock AI，不需要模型 Key。需要真实模型时，在启动前设置环境变量：
-
-```bash
-export AI_PROVIDER=qwen
-export DASHSCOPE_API_KEY=your-api-key
-docker compose up -d --build
-```
-
-常用端口也可以通过环境变量覆盖：
-
-```bash
-FRONTEND_PORT=8088 BACKEND_PORT=18080 docker compose up -d --build
-```
-
-### 方式 B：本地开发启动
-
-#### 1. 启动中间件
-
-```powershell
-cd backend
-docker compose up -d
-```
-
-默认会启动：
-
-- MySQL: `3306`
-- Redis: `6379`
-- RabbitMQ: `5672`，管理页面 `15672`
-- OpenSearch: `9200`
-
-#### 2. 配置后端环境变量
-
-```powershell
-cd backend
-copy .env.example .env
-```
-
-在 `.env` 中填入自己的模型 Key，例如：
-
-```text
-DASHSCOPE_API_KEY=your-api-key
-```
-
-注意：`.env` 不应该提交到 GitHub。
-
-#### 3. 启动后端
+### Backend / Frontend
 
 ```powershell
 cd backend
 mvn spring-boot:run
-```
 
-后端默认地址：
-
-```text
-http://localhost:8080
-```
-
-#### 4. 启动前端
-
-```powershell
-cd frontend
+cd ..\frontend
 npm install
 npm run dev
 ```
 
-前端默认地址：
+### LLM Configuration
+
+凭据只能通过环境变量注入，不要写入源码或提交到仓库：
 
 ```text
-http://localhost:5173
+AI_PROVIDER=qwen
+AI_MODEL=qwen3.7-flash
+AI_BASE_URL=<your-endpoint>
+DASHSCOPE_API_KEY=<your-api-key>
+AI_TIMEOUT_SECONDS=60
 ```
 
-## GitHub 上传前检查
+项目同时保留 OpenAI-compatible provider 支持；配置 DashScope Native `/api/v1` 时使用对应 Native client。
 
-- 不要上传 `backend/.env`。
-- 不要上传 `backend/target/`。
-- 不要上传 `frontend/node_modules/`。
-- 不要上传 `frontend/dist/`。
-- 不要上传本地 Maven/npm 缓存目录 `.m2/`、`.npm-cache/`。
-- 不要上传本地日志、录屏、截图或私有配置。
-- 保留 `.env.example`，它用于说明需要配置哪些环境变量。
+### Job Search
 
-## CI
+```text
+JOB_SEARCH_ENABLED=true
+JOB_SEARCH_VECTOR_ENABLED=false
+```
 
-仓库包含 GitHub Actions 工作流：
+当前演示优先验证 BM25；只有显式启用且 embedding client 可用时才参与 Vector/RRF。
 
-- 后端：`mvn -B test`
-- 前端：`npm ci`、`npm run typecheck`、`npm run build`
-- Docker：`docker compose config --quiet`、构建前后端镜像
-- 镜像发布：非 Pull Request 触发时推送到 GitHub Container Registry
+## GitHub Upload Checklist
 
-默认发布镜像：
-
-- `ghcr.io/warmazxy-maker/do-not-miss-github-backend`
-- `ghcr.io/warmazxy-maker/do-not-miss-github-frontend`
-
-默认分支会生成 `dev` 和 `latest` 标签，每次提交也会生成 `sha-<commit>` 标签。
-
-## 项目亮点
-
-- 不让 LLM 直接编造活动：推荐结果必须来自 RAG 候选和真实数据库 eventId。
-- OpenSearch 是派生检索索引，MySQL 仍是业务数据源。
-- Outbox Pattern 连接 MySQL 事务与 RabbitMQ 投递，消费者使用幂等 Upsert / Refresh。
-- Agent Trace 与 Bad Case Intake 让 AI 功能可观测、可复盘、可沉淀。
-- 能力评分拆成 Evidence Evaluator 和 Java AbilityScoreEngine，避免 LLM 直接决定最终分数。
-- HAC 能力聚类与动态 Anchor 让用户能力图谱从零散标签逐渐归并成稳定能力方向。
+- 不提交 `.env` 或真实 API Key。
+- 不提交 `backend/target/`、`frontend/node_modules/`、`frontend/dist/` 或本地日志。

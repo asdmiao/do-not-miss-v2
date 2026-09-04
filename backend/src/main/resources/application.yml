@@ -60,7 +60,7 @@ app:
     embedding-dimensions: ${AI_EMBEDDING_DIMENSIONS:1024}
     base-url: ${AI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
     api-key: ${DASHSCOPE_API_KEY:${AI_API_KEY:}}
-    timeout-seconds: ${AI_TIMEOUT_SECONDS:30}
+    timeout-seconds: ${AI_TIMEOUT_SECONDS:60}
   mcp:
     default-timezone: ${MCP_DEFAULT_TIMEZONE:Asia/Tokyo}
     default-location: ${MCP_DEFAULT_LOCATION:日本 大阪}
@@ -75,6 +75,12 @@ app:
     rerank-top-n: ${SEARCH_RERANK_TOP_N:12}
     base-url: ${SEARCH_BASE_URL:http://localhost:9200}
     index-name: ${SEARCH_INDEX_NAME:do_not_miss_events}
+  job-search:
+    # Dedicated JD index; BM25 remains available when vector retrieval/provider is disabled.
+    enabled: ${JOB_SEARCH_ENABLED:false}
+    vector-enabled: ${JOB_SEARCH_VECTOR_ENABLED:false}
+    rerank-enabled: ${JOB_SEARCH_RERANK_ENABLED:false}
+    index-name: ${JOB_SEARCH_INDEX_NAME:do_not_miss_job_requirements}
   search-session:
     ttl-minutes: ${SEARCH_SESSION_TTL_MINUTES:60}
   user-memory:

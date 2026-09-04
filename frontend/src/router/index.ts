@@ -9,6 +9,8 @@ import SocialOrganizationView from "@/views/SocialOrganizationView.vue";
 import SocialPublishView from "@/views/SocialPublishView.vue";
 import StudentAchievementsView from "@/views/StudentAchievementsView.vue";
 import StudentChallengesView from "@/views/StudentChallengesView.vue";
+import StudentCareerView from "@/views/StudentCareerView.vue";
+import StudentJobRequirementsView from "@/views/StudentJobRequirementsView.vue";
 import StudentCoachView from "@/views/StudentCoachView.vue";
 import StudentEventsView from "@/views/StudentEventsView.vue";
 import StudentFollowsView from "@/views/StudentFollowsView.vue";
@@ -36,7 +38,9 @@ const studentChildren: RouteRecordRaw[] = [
   ["challenges", "student-challenges", "挑战", "行动管理"],
   ["coach", "student-coach", "教练", "成长复盘"],
   ["follows", "student-follows", "关注", "发现机会"],
-  ["achievements", "student-achievements", "个人成就", "成长档案"]
+  ["achievements", "student-achievements", "个人成就", "成长档案"],
+  ["career", "student-career", "候选人档案", "职业准备"],
+  ["jobs", "student-jobs", "职位要求", "职业准备"]
 ].map(([path, name, title, section]) => ({
   path,
   name,
@@ -45,6 +49,10 @@ const studentChildren: RouteRecordRaw[] = [
       ? StudentEventsView
       : path === "achievements"
         ? StudentAchievementsView
+        : path === "career"
+          ? StudentCareerView
+          : path === "jobs"
+            ? StudentJobRequirementsView
         : path === "reservations"
           ? StudentReservationsView
         : path === "schedule"
@@ -83,7 +91,7 @@ const router = createRouter({
       path: "/",
       name: "root",
       component: WorkspacePlaceholder,
-      meta: { title: "Do Not Miss" }
+      meta: { title: "DO NOT MISS V2" }
     },
     {
       path: "/login",
@@ -142,7 +150,7 @@ router.beforeEach(async (to) => {
     return authStore.homeRoute;
   }
 
-  document.title = to.meta.title ? `${to.meta.title} | Do Not Miss` : "Do Not Miss";
+  document.title = to.meta.title ? `${to.meta.title} | DO NOT MISS V2` : "DO NOT MISS V2";
   return true;
 });
 

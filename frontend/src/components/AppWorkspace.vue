@@ -41,7 +41,7 @@ async function logout() {
       <RouterLink class="brand" :to="authStore.homeRoute">
         <span class="brand-mark">DNM</span>
         <span>
-          <strong>do not miss</strong>
+          <strong>DO NOT MISS V2</strong>
           <small>{{ props.roleLabel }}</small>
         </span>
       </RouterLink>

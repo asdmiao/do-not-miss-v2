@@ -1,0 +1,22 @@
+[
+  {"id":"jd-java-01","query":"Java Spring Boot REST API","fixture":"java-backend","relevancePosition":2,"relevance":3},
+  {"id":"jd-java-02","query":"Java backend microservice","fixture":"java-backend","relevancePosition":2,"relevance":3},
+  {"id":"jd-java-03","query":"Spring Boot experience","fixture":"java-backend","relevancePosition":2,"relevance":3},
+  {"id":"jd-rag-01","query":"RAG retrieval pipeline","fixture":"ai-rag","relevancePosition":2,"relevance":3},
+  {"id":"jd-rag-02","query":"vector retrieval evaluation","fixture":"ai-rag","relevancePosition":2,"relevance":2},
+  {"id":"jd-rag-03","query":"OpenSearch hybrid search","fixture":"ai-rag","relevancePosition":2,"relevance":3},
+  {"id":"jd-agent-01","query":"AI Agent tool calling","fixture":"ai-agent","relevancePosition":2,"relevance":3},
+  {"id":"jd-agent-02","query":"agent trace and state machine","fixture":"ai-agent","relevancePosition":2,"relevance":3},
+  {"id":"jd-agent-03","query":"LLM application engineering","fixture":"ai-agent","relevancePosition":2,"relevance":2},
+  {"id":"jd-python-01","query":"Python data processing","fixture":"data-platform","relevancePosition":2,"relevance":3},
+  {"id":"jd-python-02","query":"SQL analytics","fixture":"data-platform","relevancePosition":2,"relevance":3},
+  {"id":"jd-k8s-01","query":"Kubernetes deployment","fixture":"platform","relevancePosition":2,"relevance":3},
+  {"id":"jd-k8s-02","query":"Docker and CI CD","fixture":"platform","relevancePosition":2,"relevance":2},
+  {"id":"jd-product-01","query":"product requirement analysis","fixture":"product-ai","relevancePosition":1,"relevance":2},
+  {"id":"jd-product-02","query":"cross functional communication","fixture":"product-ai","relevancePosition":1,"relevance":2},
+  {"id":"jd-preferred-01","query":"open source contribution preferred","fixture":"java-backend","relevancePosition":3,"relevance":2},
+  {"id":"jd-preferred-02","query":"competition award preferred","fixture":"ai-rag","relevancePosition":3,"relevance":2},
+  {"id":"jd-level-01","query":"three years Java experience","fixture":"java-backend","relevancePosition":2,"relevance":3},
+  {"id":"jd-level-02","query":"senior RAG engineer","fixture":"ai-rag","relevancePosition":2,"relevance":3},
+  {"id":"jd-general-01","query":"software engineering responsibilities","fixture":"general","relevancePosition":1,"relevance":1}
+]

@@ -1,0 +1,2 @@
+package com.donotmiss.backend.aiapplication.career; import org.springframework.data.jpa.repository.JpaRepository; import java.util.*;
+public interface CandidateProfileSnapshotRepository extends JpaRepository<CandidateProfileSnapshotEntity,Long>{Optional<CandidateProfileSnapshotEntity> findByResumeVersionIdAndUserId(Long resumeVersionId,String userId); Optional<CandidateProfileSnapshotEntity> findTopByUserIdOrderByGeneratedAtDesc(String userId);}

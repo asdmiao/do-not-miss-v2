@@ -1,0 +1,12 @@
+[
+  {"candidateId":"candidate-java-ai","highMatchJobIds":["job-agent-1","job-ai-app-1"],"mediumMatchJobIds":["job-java-1"],"lowMatchJobIds":["job-algorithm-1","job-ml-platform-1"]},
+  {"candidateId":"candidate-java-backend","highMatchJobIds":["job-java-1","job-platform-1"],"mediumMatchJobIds":["job-ai-app-1"],"lowMatchJobIds":["job-agent-1","job-algorithm-1"]},
+  {"candidateId":"candidate-rag","highMatchJobIds":["job-agent-1","job-rag-1"],"mediumMatchJobIds":["job-ai-app-1"],"lowMatchJobIds":["job-ml-platform-1","job-algorithm-1"]},
+  {"candidateId":"candidate-product-ai","highMatchJobIds":["job-ai-app-1","job-product-ai-1"],"mediumMatchJobIds":["job-agent-1"],"lowMatchJobIds":["job-java-1","job-algorithm-1"]},
+  {"candidateId":"candidate-platform","highMatchJobIds":["job-platform-1","job-java-1"],"mediumMatchJobIds":["job-ml-platform-1"],"lowMatchJobIds":["job-product-ai-1","job-agent-1"]},
+  {"candidateId":"candidate-ml","highMatchJobIds":["job-algorithm-1","job-ml-platform-1"],"mediumMatchJobIds":["job-rag-1"],"lowMatchJobIds":["job-java-1","job-product-ai-1"]},
+  {"candidateId":"candidate-entry-java","highMatchJobIds":["job-java-1"],"mediumMatchJobIds":["job-ai-app-1","job-platform-1"],"lowMatchJobIds":["job-agent-1","job-algorithm-1"]},
+  {"candidateId":"candidate-entry-ai","highMatchJobIds":["job-ai-app-1"],"mediumMatchJobIds":["job-rag-1","job-agent-1"],"lowMatchJobIds":["job-platform-1","job-algorithm-1"]},
+  {"candidateId":"candidate-devops-ai","highMatchJobIds":["job-platform-1","job-ml-platform-1"],"mediumMatchJobIds":["job-agent-1"],"lowMatchJobIds":["job-product-ai-1","job-algorithm-1"]},
+  {"candidateId":"candidate-research","highMatchJobIds":["job-algorithm-1"],"mediumMatchJobIds":["job-rag-1"],"lowMatchJobIds":["job-java-1","job-platform-1"]}
+]

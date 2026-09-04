@@ -1,0 +1,2 @@
+package com.donotmiss.backend.aiapplication.career; import org.springframework.data.jpa.repository.JpaRepository; import java.util.*;
+public interface SkillDictionaryEntityRepository extends JpaRepository<SkillDictionaryEntity,String>{Optional<SkillDictionaryEntity> findBySkillCodeAndVersionAndActiveTrue(String skillCode,String version); List<SkillDictionaryEntity> findByVersionAndActiveTrue(String version);}

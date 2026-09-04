@@ -131,8 +131,8 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleGlobalKeydown)
       <RouterLink class="student-brand" to="/student/events">
         <span class="brand-mark">DNM</span>
         <span>
-          <strong>do not miss</strong>
-          <small>学生成长工作台</small>
+          <strong>DO NOT MISS V2</strong>
+          <small>Personal Growth Hub</small>
         </span>
       </RouterLink>
 
@@ -174,7 +174,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleGlobalKeydown)
       <header class="student-topbar">
         <RouterLink class="student-mobile-brand" to="/student/events">
           <span class="brand-mark">DNM</span>
-          <strong>do not miss</strong>
+          <strong>DO NOT MISS V2</strong>
         </RouterLink>
 
         <div class="student-route-title">

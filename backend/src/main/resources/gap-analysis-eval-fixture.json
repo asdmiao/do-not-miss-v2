@@ -1,0 +1,14 @@
+[
+  {"id":"gap-01","requirementSkill":"JAVA_BACKEND","importance":5,"requiredLevel":"mid","candidateEvidenceSkill":"JAVA_BACKEND","semanticSupported":true,"strength":"STRONG","confidence":0.92,"expected":"MATCH"},
+  {"id":"gap-02","requirementSkill":"RAG_ENGINEERING","importance":5,"requiredLevel":"mid","candidateEvidenceSkill":"RAG_ENGINEERING","semanticSupported":true,"strength":"STRONG","confidence":0.88,"expected":"MATCH"},
+  {"id":"gap-03","requirementSkill":"AGENT_ENGINEERING","importance":4,"requiredLevel":"mid","candidateEvidenceSkill":"AGENT_ENGINEERING","semanticSupported":true,"strength":"STRONG","confidence":0.81,"expected":"MATCH"},
+  {"id":"gap-04","requirementSkill":"JAVA_BACKEND","importance":4,"requiredLevel":"senior","candidateEvidenceSkill":"JAVA_BACKEND","semanticSupported":false,"strength":"WEAK","confidence":0.89,"expected":"GAP"},
+  {"id":"gap-05","requirementSkill":"RAG_ENGINEERING","importance":5,"requiredLevel":"senior","candidateEvidenceSkill":"RAG_ENGINEERING","semanticSupported":false,"strength":"MODERATE","confidence":0.83,"expected":"GAP"},
+  {"id":"gap-06","requirementSkill":"UNMAPPED","importance":3,"requiredLevel":"mid","candidateEvidenceSkill":"UNMAPPED","semanticSupported":false,"strength":"WEAK","confidence":0.78,"expected":"GAP"},
+  {"id":"gap-07","requirementSkill":"AI_APPLICATION","importance":3,"requiredLevel":"mid","candidateEvidenceSkill":null,"semanticSupported":false,"strength":"NONE","confidence":0.0,"expected":"UNKNOWN"},
+  {"id":"gap-08","requirementSkill":"AGENT_ENGINEERING","importance":4,"requiredLevel":"senior","candidateEvidenceSkill":null,"semanticSupported":false,"strength":"NONE","confidence":0.0,"expected":"UNKNOWN"},
+  {"id":"gap-09","requirementSkill":"JAVA_BACKEND","importance":2,"requiredLevel":"unspecified","candidateEvidenceSkill":"JAVA_BACKEND","semanticSupported":true,"strength":"MODERATE","confidence":0.55,"expected":"UNKNOWN"},
+  {"id":"gap-10","requirementSkill":"RAG_ENGINEERING","importance":4,"requiredLevel":"unspecified","candidateEvidenceSkill":"RAG_ENGINEERING","semanticSupported":false,"strength":"WEAK","confidence":0.45,"expected":"UNKNOWN"},
+  {"id":"gap-11","requirementSkill":"AI_APPLICATION","importance":5,"requiredLevel":"mid","candidateEvidenceSkill":"AI_APPLICATION","semanticSupported":true,"strength":"STRONG","confidence":0.76,"expected":"MATCH"},
+  {"id":"gap-12","requirementSkill":"JAVA_BACKEND","importance":5,"requiredLevel":"mid","candidateEvidenceSkill":"JAVA_BACKEND","semanticSupported":false,"strength":"MODERATE","confidence":0.75,"expected":"GAP"}
+]
